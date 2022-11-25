@@ -1,0 +1,20 @@
+server:
+  port: 8763
+spring:
+  application:
+    name: ApiGateWay
+  cloud:
+    gateway:
+      routes:
+      - id: BOOK-SERVICE
+        uri: lb://BOOK-SERVICE
+        predicates:
+        - Path=/book/**
+      - id: AUTHOR-SERVICE
+        uri: lb://AUTHOR-SERVICE
+        predicates:
+        - Path=/author/**
+      - id: READER-SERVICE
+        uri: lb://READER-SERVICE
+        predicates:
+        - Path=/reader/**

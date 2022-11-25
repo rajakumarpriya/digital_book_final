@@ -1,0 +1,88 @@
+<div class="container">
+    <div class="container">
+        <div><button class="btn btn-secondary" (click)="paymentButtonEnabler()">GetBookByPaymentId</button></div>
+        <div><button class="btn btn-secondary" (click)="emailButtonEnabler()">GetPurchasedBooksByEmailId</button></div>
+        <div><button class="btn btn-secondary" (click)="searchButtonEnabler()">SearchBook</button></div>
+        <div><button class="btn btn-secondary" (click)="getAllBooksForUser()">GetAllBooks</button></div>
+    </div><br><br>
+    <div class="container" *ngIf="paymentButton">
+        <input type="text" placeholder="Plase enter paymentId to get book details" [(ngModel)]="paymentId">
+        <button class="btn btn-primary" (click)="getBookByPaymentId()">Submit</button>
+    </div>
+    <div class="container" *ngIf="emailButton">
+        <input type="text" placeholder="Plase enter emailId to get book details" [(ngModel)]="readerDetails.emailId">
+        <button class="btn btn-primary" (click)="getBooksByEmailId()">Submit</button>
+    </div>
+    <div class="container" *ngIf="unsubemailButton">
+        <input type="text" placeholder="Plase enter emailId to get book details" [(ngModel)]="readerDetails.emailId">
+        <button class="btn btn-primary" (click)="unSubscribeBook()">Submit</button>
+    </div>
+    <div class="container" *ngIf="searchButton">
+        <h3>You can search with any field or if you don't know anything also its fine. hit search button</h3>
+        <div><label>Title : </label>
+            <input type="text" placeholder="please enter title" [(ngModel)]="search.title">
+        </div>
+        <div><label>AuthorName : </label>
+            <input type="text" placeholder="please enter authorName" [(ngModel)]="search.authorName">
+        </div>
+        <div><label>Publisher : </label>
+            <input type="text" placeholder="please enter publisher" [(ngModel)]="search.publisher">
+        </div>
+        <div><label>FromDate : </label>
+            <input type="date" placeholder="please enter fromDate" [(ngModel)]="search.fromDate">
+        </div>
+        <div><label>ToDate : </label>
+            <input type="date" placeholder="please enter toDate" [(ngModel)]="search.toDate">
+        </div>
+        <button class="btn btn-primary" (click)="searchBook()">Search</button>
+    </div>
+    <div class="container" *ngIf="openForms">
+        <div>
+            <label for="email"><b>Email : </b></label>
+            <input type="text" placeholder="Enter Email" [(ngModel)]="readerDetails.emailId" required>
+        </div><br>
+        <div>
+            <label for="psw"><b>name : </b></label>
+            <input type="text" placeholder="Enter name" [(ngModel)]="readerDetails.authorName" required>
+        </div><br>
+        <div>
+            <button type="submit" class="btn btn-primary" (click)="subscribeBook()">subscribe</button>
+            <button type="button" class="btn btn-primary" (click)="openForm()">Close</button>
+        </div>
+    </div>
+    <div class="container">
+        <table>
+            <table class="table table-white table-hover table-border">
+                <thead>
+                    <tr>
+                        <th scope="col">SnNo</th>
+                        <th scope="col">Image</th>
+                        <th scope="col">authorName</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">category</th>
+                        <th scope="col">publisher</th>
+                        <th scope="col">Date And Time</th>
+                        <th scope="col">content</th>
+                        <th scope="col">Subscribe or unSubscribe</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let details of booksDetailsList; let i =index">
+                        <th scope="row">{{i+1}}</th>
+                        <td scope="row"><img src="{{details.image}}" alt="bookImages" class="bookImage"></td>
+                        <td scope="row">{{details.authorName}}</td>
+                        <td scope="row">{{details.title}}</td>
+                        <td scope="row">{{details.category}}</td>
+                        <td scope="row">{{details.publisher}}</td>
+                        <td scope="row">{{changeTime(details.timeStamp)}}</td>
+                        <td scope="row">{{details.content}}</td>
+                        <td scope="row" *ngIf="subButton"><button class="btn btn-primary"
+                                (click)="openForm(i)">Subscribe</button>
+                        <td scope="row" *ngIf="!subButton"><button class="btn btn-primary"
+                                (click)="enableEmail(i)">unSubscribe</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </table>
+    </div>

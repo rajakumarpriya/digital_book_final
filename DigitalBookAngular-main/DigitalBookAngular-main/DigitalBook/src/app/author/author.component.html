@@ -1,0 +1,217 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-white">
+    <h3 style="text-align: center;">DigitalBook</h3>
+
+    <button class="btn btn-primary" *ngIf="logoutButton" (click)="logout()">Logout</button>
+
+</nav>
+<section class="vh-100">
+    <div *ngIf="showLoginForm">
+        <div>
+            <input [(ngModel)]="authorDetils.emailId" placeholder="enter email">
+        </div>
+        <div>
+            <input [(ngModel)]="authorDetils.password" placeholder="enter password">
+        </div>
+        <button (click)="loginAuthor()">Login</button>
+        <p>Don't have an account? </p>
+        <button (click)="callRegister()">Register</button>
+    </div>
+    <div *ngIf="showRegistrationForm">
+
+        <input [(ngModel)]="authorDetils.authorName" placeholder="enter full name">
+        <input [(ngModel)]="authorDetils.emailId" placeholder="enter email">
+        <input [(ngModel)]="authorDetils.password" placeholder="enter password">
+        <p>already have an account? <a (click)="callLogin()">Login</a></p><button
+            (click)="registerAuthor()">Register</button>
+    </div>
+    <!--<div class="container-fluid h-custom" *ngIf="mainDiv">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-md-9 col-lg-6 col-xl-5">
+                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
+                    class="img-fluid" alt="Sample image">
+            </div>
+            <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1" *ngIf="showLoginForm">
+                <form>
+                    <div class="form-outline mb-4">
+                        <input [(ngModel)]="authorDetils.emailId" [ngModelOptions]="{standalone: true}" type="text"
+                            class="form-control form-control-lg" placeholder="Enter a valid email address" />
+                        <label class="form-label">Email address</label>
+                    </div>
+                    <div class="form-outline mb-3">
+                        <input [(ngModel)]="authorDetils.password" [ngModelOptions]="{standalone: true}" type="password"
+                            class="form-control form-control-lg" placeholder="Enter password" />
+                        <label class="form-label">Password</label>
+                    </div>
+                    <div class="text-center text-lg-start mt-4 pt-2">
+                        <button type="button" (click)="loginAuthor()" class="btn btn-primary btn-lg"
+                            style="padding-left: 2.5rem; padding-right: 2.5rem;">Login</button>
+                        <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <a (click)="callRegister()"
+                                class="link-danger">Register</a></p>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1" *ngIf="showRegistrationForm">
+                <form>
+                    <div class="form-outline mb-4">
+                        <input [(ngModel)]="authorDetils.authorName" [ngModelOptions]="{standalone: true}" type="email"
+                            id="form3Example3" class="form-control form-control-lg" placeholder="Enter Full name" />
+                        <label class="form-label" for="form3Example3">Full name</label>
+                    </div>
+                    <div class="form-outline mb-4">
+                        <input [(ngModel)]="authorDetils.emailId" [ngModelOptions]="{standalone: true}" type="email"
+                            id="form3Example3" class="form-control form-control-lg"
+                            placeholder="Enter a valid email address" />
+                        <label class="form-label" for="form3Example3">Email address</label>
+                    </div>
+                    <div class="form-outline mb-3">
+                        <input [(ngModel)]="authorDetils.password" [ngModelOptions]="{standalone: true}" type="password"
+                            id="form3Example4" class="form-control form-control-lg" placeholder="Enter password" />
+                        <label class="form-label" for="form3Example4">Password</label>
+                    </div>
+                    <div class="text-center text-lg-start mt-4 pt-2">
+                        <button type="button" class="btn btn-primary btn-lg" (click)="registerAuthor()"
+                            style="padding-left: 2.5rem; padding-right: 2.5rem;">Register</button>
+                        <p class="small fw-bold mt-2 pt-1 mb-0">already have an account? <a (click)="callLogin()"
+                                class="link-danger">Login</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>-->
+    <div class="container" style="padding-left: 40%;">
+        <button class="btn btn-primary" *ngIf="publishButton" (click)="enablePublish()">PublishBook</button>&nbsp;&nbsp;
+        <button class="btn btn-primary" *ngIf="booksButton" (click)="getBooksForAuthorButton()">GetBooks</button>
+    </div><br>
+    <br>
+
+    <div class="container" *ngIf="showBooks">
+        <table>
+            <table class="table table-white table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">SnNo</th>
+                        <th scope="col">Image</th>
+                        <th scope="col">authorName</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">category</th>
+                        <th scope="col">publisher</th>
+                        <th scope="col">content</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Date And Time</th>
+                        <th scope="col">Edit Or Block</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let details of booksDetailsList; index as i">
+                        <th scope="row">{{i+1}}</th>
+                        <td scope="row"><img src="{{details.image}}" alt="bookImages" class="bookImage"></td>
+                        <td scope="row">{{details.authorName}}</td>
+                        <td scope="row">{{details.title}}</td>
+                        <td scope="row">{{details.category}}</td>
+                        <td scope="row">{{details.publisher}}</td>
+                        <td scope="row">{{details.content}}</td>
+                        <td scope="row">{{details.active}}</td>
+                        <td scope="row">{{details.price}}</td>
+                        <td scope="row">{{changeTime(details.timeStamp)}}</td>
+                        <td scope="row"><button class="btn btn-primary" (click)="editBook(i)">EditBook</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </table>
+    </div>
+    <div class="container" *ngIf="publishTable">
+        <div>
+            <label><b>Title : </b></label>
+            <input type="text" placeholder="title" [(ngModel)]="publishBook.title" required>
+        </div><br>
+        <div>
+            <label><b>Category : </b></label>
+            <input type="text" placeholder="title" [(ngModel)]="publishBook.category" required>
+        </div><br>
+        <div>
+            <label><b>Content : </b></label>
+            <input type="text" placeholder="title" [(ngModel)]="publishBook.content" required>
+        </div><br>
+        <div>
+            <label><b>Publisher : </b></label>
+            <input type="text" placeholder="title" [(ngModel)]="publishBook.publisher" required>
+        </div><br>
+        <div>
+            <label><b>Image : </b></label>
+            <input type="text" placeholder="title" [(ngModel)]="publishBook.image" required>
+        </div><br>
+        <div>
+            <label><b>Price : </b></label>
+            <input type="text" placeholder="title" [(ngModel)]="publishBook.price" required>
+        </div><br>
+        <button class="btn btn-primary" (click)="publishABook()">PublishBook</button>
+    </div>
+    <div class="container" *ngIf="saveBook">
+        <div>
+            <label><b>Title : </b></label>
+            <input type="text" placeholder="title" [(ngModel)]="publishBook.title" required>
+        </div><br>
+        <div>
+            <label><b>Category : </b></label>
+            <input type="text" placeholder="category" [(ngModel)]="publishBook.category" required>
+        </div><br>
+        <div>
+            <label><b>Content : </b></label>
+            <input type="text" placeholder="content" [(ngModel)]="publishBook.content" required>
+        </div><br>
+        <div>
+            <label><b>Publisher : </b></label>
+            <input type="text" placeholder="title" [(ngModel)]="publishBook.publisher" required>
+        </div><br>
+        <div>
+            <label><b>Image : </b></label>
+            <input type="text" placeholder="Image" [(ngModel)]="publishBook.image" required>
+        </div><br>
+        <div>
+            <label><b>Price : </b></label>
+            <input type="text" placeholder="price" [(ngModel)]="publishBook.price" required>
+        </div><br>
+        <div>
+            <label><b>Status : </b></label>
+            <input type="text" placeholder="0=active book 1 for block a book" [(ngModel)]="publishBook.active" required>
+        </div><br>
+        <button class="btn btn-primary" (click)="saveEditedBook()">save Book</button>
+    </div>
+
+</section>
+<!--<div class="container" *ngIf="showLoginForm">
+    <div>
+        <label>EmailId</label><br>
+        <input placeholder="Enter emailId" class="form-control form-control-lg" [(ngModel)]="authorDetils.emailId" />
+    </div><br>
+    <div>
+        <label>Password</label><br>
+        <input placeholder="Enter password" class="form-control form-control-lg" type="password" [(ngModel)]="authorDetils.password" />
+    </div><br>
+    <div>
+        <div>
+            <button style="align-items: center;" class="btn btn-primary" (click)="loginAuthor()">Login</button> If not a member :
+            <button class="btn btn-primary" (click)="callRegister()">Register</button>
+        </div>
+    </div>
+</div>
+
+
+<div class="container" *ngIf="showRegistrationForm">
+    <div>
+        <label>FullName</label><br>
+        <input placeholder="Enter your full name" class="form-control form-control-lg" [(ngModel)]="authorDetils.authorName" />
+    </div><br>
+    <div>
+        <label>EmailId</label><br>
+        <input placeholder="Enter emailId" class="form-control form-control-lg" [(ngModel)]="authorDetils.emailId" />
+    </div><br>
+    <div>
+        <label>Password</label><br>
+        <input placeholder="Enter password" class="form-control form-control-lg" type="password" [(ngModel)]="authorDetils.password" />
+    </div><br><br>
+    <div>
+        <button class="btn btn-primary" (click)="registerAuthor()">Register</button> If you have already: <button style="align-items: center;" class="btn btn-primary" (click)="callLogin()">Login</button>
+    </div>
+</div><br>-->

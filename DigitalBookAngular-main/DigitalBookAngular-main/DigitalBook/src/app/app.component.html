@@ -1,0 +1,25 @@
+<header *ngIf="showHomePage">
+    <div class="p-5 text-center bg-image">
+        <div class="mask" style="padding-top: 10%;">
+            <div class="d-flex justify-content-center align-items-center h-100">
+                <div class="text-white">
+                    <button class="btn btn-outline-black btn-lg btn-primary" routerLink="/author"
+                        (click)="diableHome()">Author</button>
+                    <br>
+
+                </div>
+                <div class="text-white">
+                    <button class="btn btn-outline-black btn-lg btn-primary" routerLink="/reader"
+                        (click)="diableHome()">Reader</button>
+                    <br>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<router-outlet></router-outlet>
+<!--<div>
+    <app-reader></app-reader>
+    <router-outlet></router-outlet>
+</div>-->
